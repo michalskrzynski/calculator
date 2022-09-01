@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Calculator</title>
+  <link rel="stylesheet" href="bootstrap.css">
+  <link rel="stylesheet" href="style.css">
+  <script type="javascript" src="script.js"></script>
+</head>
+<body>
+
+  <div class="page">
+
+    <div class="calculator shadow-sm p-3 mb-5 bg-white rounded">
+      <div class="screen">
+        <h2 class="operation lastOperation fs-5">last operation</h2>
+        <h1 class="operation currentOperation fs-1">0</h1>
+      </div>
+
+      <div class="section">
+        <div class="input-modifiers pt-3 pb-3">
+          <button id="button-clear" class="btn btn-outline-danger input-modifier left">CLEAR</button>
+          <button id="button-delete" class="btn btn-outline-warning input-modifier right">DELETE</button>
+        </div>
+      </div>
+
+      <div class="section core">
+        <div class="input-digits">
+          <button class="input-digit mt-2 btn btn-outline-secondary" data-value="8">8</button>
+          <button class="input-digit mt-2 btn btn-outline-secondary" data-value="7">7</button>
+          <button class="input-digit mt-2 btn btn-outline-secondary" data-value="9">9</button>
+          <button class="input-digit mt-2 btn btn-outline-secondary" data-value="4">4</button>
+          <button class="input-digit mt-2 btn btn-outline-secondary" data-value="5">5</button>
+          <button class="input-digit mt-2 btn btn-outline-secondary" data-value="6">6</button>
+          <button class="input-digit mt-2 btn btn-outline-secondary" data-value="1">1</button>
+          <button class="input-digit mt-2 btn btn-outline-secondary" data-value="2">2</button>
+          <button class="input-digit mt-2 btn btn-outline-secondary" data-value="3">3</button>
+          <button class="input-digit mt-2 btn btn-outline-secondary" data-value=".">.</button>
+          <button class="input-digit mt-2 btn btn-outline-secondary" data-value="0">0</button>
+          <button class="input-digit mt-2 btn btn-outline-success" data-value="=">=</button>
+        </div>
+
+        <div class="input-functions">
+          <button class="input-function mt-2 btn btn-outline-primary" data-value="/">/</button>
+          <button class="input-function mt-2 btn btn-outline-primary" data-value="x">x</button>
+          <button class="input-function mt-2 btn btn-outline-primary" data-value="-">-</button>
+          <button class="input-function mt-2 btn btn-outline-primary" data-value="+">+</button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  
+</body>
+</html>

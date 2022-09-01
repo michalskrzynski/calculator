@@ -1,0 +1,63 @@
+body {
+  margin: 0px;
+  background-color:antiquewhite;
+}
+
+* {
+  font-size: 1em;
+}
+
+h1 {
+  font-size: 2em;
+}
+h2. {
+  font-size: 1.5em;
+}
+
+div.page {
+  width: 360px;
+  margin: 20px auto;
+}
+
+div.calculator {
+}
+
+div.screen {
+  background-color: beige;;
+  border-radius: 8px;
+  padding: 8px;
+  height: 6em;
+}
+
+.operation {
+  text-align: end;
+}
+
+div.input-modifiers {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-modifier {
+  width: 100%;
+}
+
+.input-modifier.left {
+  margin-right: 5px;
+}
+
+.input-modifier.right {
+  margin-left: 5px;
+}
+
+div.section.core {
+  display: flex;
+}
+
+.input-digits button {
+  width: 30%;
+}
+
+.input-functions button{
+  width: 100%;
+}
