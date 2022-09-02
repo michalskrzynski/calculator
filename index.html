@@ -6,7 +6,7 @@
   <title>Calculator</title>
   <link rel="stylesheet" href="bootstrap.css">
   <link rel="stylesheet" href="style.css">
-  <script type="javascript" src="script.js"></script>
+  <script type="text/javascript" src="script.js" defer></script>
 </head>
 <body>
 
@@ -14,14 +14,14 @@
 
     <div class="calculator shadow-sm p-3 mb-5 bg-white rounded">
       <div class="screen">
-        <h2 class="operation lastOperation fs-5">last operation</h2>
-        <h1 class="operation currentOperation fs-1">0</h1>
+        <h2 id="expression" class="expression fs-5"></h2>
+        <h1 id="current-number" class="current-number fs-1">0</h1>
       </div>
 
       <div class="section">
         <div class="input-modifiers pt-3 pb-3">
-          <button id="button-clear" class="btn btn-outline-danger input-modifier left">CLEAR</button>
-          <button id="button-delete" class="btn btn-outline-warning input-modifier right">DELETE</button>
+          <button id="button-clear" class="input-modifier btn btn-outline-danger left">CLEAR</button>
+          <button id="button-delete" class="input-modifier btn btn-outline-warning right">DELETE</button>
         </div>
       </div>
 
@@ -36,14 +36,14 @@
           <button class="input-digit mt-2 btn btn-outline-secondary" data-value="1">1</button>
           <button class="input-digit mt-2 btn btn-outline-secondary" data-value="2">2</button>
           <button class="input-digit mt-2 btn btn-outline-secondary" data-value="3">3</button>
-          <button class="input-digit mt-2 btn btn-outline-secondary" data-value=".">.</button>
+          <button class="input-dot mt-2 btn btn-outline-secondary" data-value=".">.</button>
           <button class="input-digit mt-2 btn btn-outline-secondary" data-value="0">0</button>
-          <button class="input-digit mt-2 btn btn-outline-success" data-value="=">=</button>
+          <button class="input-equals mt-2 btn btn-outline-success" data-value="=">=</button>
         </div>
 
         <div class="input-functions">
           <button class="input-function mt-2 btn btn-outline-primary" data-value="/">/</button>
-          <button class="input-function mt-2 btn btn-outline-primary" data-value="x">x</button>
+          <button class="input-function mt-2 btn btn-outline-primary" data-value="*">x</button>
           <button class="input-function mt-2 btn btn-outline-primary" data-value="-">-</button>
           <button class="input-function mt-2 btn btn-outline-primary" data-value="+">+</button>
         </div>

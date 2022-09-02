@@ -29,9 +29,10 @@ div.screen {
   height: 6em;
 }
 
-.operation {
+.expression, .current-number {
   text-align: end;
 }
+
 
 div.input-modifiers {
   display: flex;
