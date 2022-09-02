@@ -7,9 +7,9 @@ const inputDot = document.querySelector('button.input-dot');
 const inputEquals = document.querySelector('button.input-equals');
 
 let expression = '';
-
 let lastResult = 0;
 let useLastResult = false;
+let noDigitClicked = true;
 
 /// 
 /// Util functions
@@ -34,7 +34,7 @@ const getCurrNum = () => {
 
 const clearCurrNum = () => {
   currNumElem.textContent = '0';
-  useLastResult = true;
+  noDigitClicked = true;
 }
 
 const currNumEval = () => {
@@ -49,7 +49,8 @@ const currNumEval = () => {
 ///
 const clearClicked = (e) => {
   console.log('CLEAR');
-  resetExpression();
+  if( isExpressionInProgress ) resetExpression();
+
   clearCurrNum(); 
 }
 
@@ -63,6 +64,7 @@ const deleteClicked = (e) => {
 const inputDigitClicked = (e) => {
   //if user clicked 0, we dont want to use last result when function pressed
   useLastResult = false; 
+  noDigitClicked = false;
 
 
   const digit = e.srcElement.dataset.value;
@@ -72,6 +74,7 @@ const inputDigitClicked = (e) => {
   currNumElem.textContent = getCurrNum() === '0' ? digit : getCurrNum() + digit;
   console.log('Current number eval:' + currNumEval() );
 }
+
 
 const inputDotClicked = (e) => {
   currNumElem.textContent = getCurrNum().includes('.') ? getCurrNum() : getCurrNum() + '.';
@@ -85,6 +88,7 @@ const inputDotClicked = (e) => {
 const inputFunctionClicked = (e) => {
   const func = e.srcElement.dataset.value;
   const num = useLastResult ? lastResult : getCurrNum();
+  if( noDigitClicked && !lastResult ) num = '';
 
   if( isExpressionInProgress() ) expression = expression + num + ' ' + func + ' ';
   else {
@@ -99,11 +103,14 @@ const inputFunctionClicked = (e) => {
 
 
 const inputEqualsClicked = (e) => {
-  console.log('equals');
-  //expression = expression + currNumElem.textContent;
-  expressionElem.textContent += currNumElem.textContent;
+  if( noDigitClicked ) return;
+  console.log('EQUALS');
+  
+  expressionElem.textContent += getCurrNum();
   lastResult = eval( expressionElem.textContent );
   expressionElem.textContent += ' = ' + lastResult;
+  useLastResult = true;
+
   clearCurrNum();
 }
 
