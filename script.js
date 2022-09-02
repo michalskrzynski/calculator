@@ -7,7 +7,9 @@ const inputDot = document.querySelector('button.input-dot');
 const inputEquals = document.querySelector('button.input-equals');
 
 let expression = '';
+let currNum = '';
 let lastResult = 0;
+let expressionInProgress = true;
 let useLastResult = false;
 let noDigitClicked = true;
 
@@ -24,15 +26,12 @@ const resetExpression = () => {
   displayExpression();
 }
 
-const isExpressionInProgress = () => {
-  return !(expressionElem.textContent.includes('=') || expressionElem.textContent === '' );
-}
-
 const getCurrNum = () => {
-  return currNumElem.textContent;
+  return currNum;
 }
 
 const clearCurrNum = () => {
+  currNum = '0';
   currNumElem.textContent = '0';
   noDigitClicked = true;
 }
@@ -42,14 +41,72 @@ const currNumEval = () => {
 }
 
 
+///
+/// We're separating the logic from display 
+/// Functions provide funcionality of calculator on just global vars without DOM
+///
+const takeDigit = (d) => {
+  if( !expressionInProgress ) expression = '';
+
+  useLastResult = false; 
+  noDigitClicked = false;
+  expressionInProgress = true;
+
+  currNum = currNum  === '0' ? d : currNum + d;
+}
+
+
+const takeFunction = (f) => {
+  const num = useLastResult ? lastResult : currNum;
+  if( noDigitClicked && !lastResult ) num = '';
+
+  if( expressionInProgress ) expression = expression + num + ' ' + f + ' ';
+  else expression = num + ' ' + f + ' ';
+  
+  expressionInProgress = true;
+}
+
+
+const hitEquals = () => {
+  if( noDigitClicked ) return;
+  //only expressions that are in progress are to be evaluated
+  if( !expressionInProgress ) return; 
+  
+
+  expression += currNum;
+  lastResult = eval( expression );
+  expression += ' = ' + lastResult;
+  expressionInProgress = false;
+  useLastResult = true;
+}
+
 
 
 ///
 /// All event handlers
 ///
+const inputDigitClicked = (e) => { 
+  takeDigit( e.srcElement.dataset.value ) 
+
+  currNumElem.textContent = currNum;
+  displayExpression();
+}
+const inputFunctionClicked = (e) => { 
+  takeFunction( e.srcElement.dataset.value ); 
+
+  displayExpression();
+  clearCurrNum();
+}
+
+const inputEqualsClicked = (e) => {
+  hitEquals();
+
+  displayExpression();
+  clearCurrNum();
+}
+
 const clearClicked = (e) => {
-  console.log('CLEAR');
-  if( isExpressionInProgress ) resetExpression();
+  if( expressionInProgress ) resetExpression();
 
   clearCurrNum(); 
 }
@@ -61,57 +118,14 @@ const deleteClicked = (e) => {
 
 
 
-const inputDigitClicked = (e) => {
-  //if user clicked 0, we dont want to use last result when function pressed
-  useLastResult = false; 
-  noDigitClicked = false;
-
-
-  const digit = e.srcElement.dataset.value;
-  console.log('Digit:' + digit );
- 
-
-  currNumElem.textContent = getCurrNum() === '0' ? digit : getCurrNum() + digit;
-  console.log('Current number eval:' + currNumEval() );
-}
-
-
 const inputDotClicked = (e) => {
+  useLastResult = false;
+  noDigitClicked = false;
+  expressionInProgress = true;
+
   currNumElem.textContent = getCurrNum().includes('.') ? getCurrNum() : getCurrNum() + '.';
   
   console.log('Current number eval:' + currNumEval() );
-}
-
-
-
-
-const inputFunctionClicked = (e) => {
-  const func = e.srcElement.dataset.value;
-  const num = useLastResult ? lastResult : getCurrNum();
-  if( noDigitClicked && !lastResult ) num = '';
-
-  if( isExpressionInProgress() ) expression = expression + num + ' ' + func + ' ';
-  else {
-    expression = num + ' ' + func + ' ';
-  }
-
-  displayExpression();
-  clearCurrNum();
-}
-
-
-
-
-const inputEqualsClicked = (e) => {
-  if( noDigitClicked ) return;
-  console.log('EQUALS');
-  
-  expressionElem.textContent += getCurrNum();
-  lastResult = eval( expressionElem.textContent );
-  expressionElem.textContent += ' = ' + lastResult;
-  useLastResult = true;
-
-  clearCurrNum();
 }
 
 
