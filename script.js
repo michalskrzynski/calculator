@@ -7,7 +7,7 @@ const inputDot = document.querySelector('button.input-dot');
 const inputEquals = document.querySelector('button.input-equals');
 
 let expression = '';
-let currNum = '';
+let currNum = '0';
 let lastResult = 0;
 let expressionInProgress = true;
 let useLastResult = false;
@@ -21,9 +21,12 @@ const displayExpression = () => {
   expressionElem.textContent = expression;
 }
 
+const displayCurrNum = () => {
+  currNumElem.textContent = currNum;
+}
+
 const resetExpression = () => {
   expression = '';
-  displayExpression();
 }
 
 const getCurrNum = () => {
@@ -32,7 +35,6 @@ const getCurrNum = () => {
 
 const clearCurrNum = () => {
   currNum = '0';
-  currNumElem.textContent = '0';
   noDigitClicked = true;
 }
 
@@ -67,6 +69,15 @@ const takeFunction = (f) => {
 }
 
 
+const takeDot = () => {
+  useLastResult = false;
+  noDigitClicked = false;
+  expressionInProgress = true;
+
+  currNum = currNum.includes('.') ? currNum : currNum + '.';
+}
+
+
 const hitEquals = () => {
   if( noDigitClicked ) return;
   //only expressions that are in progress are to be evaluated
@@ -88,7 +99,7 @@ const hitEquals = () => {
 const inputDigitClicked = (e) => { 
   takeDigit( e.srcElement.dataset.value ) 
 
-  currNumElem.textContent = currNum;
+  displayCurrNum();
   displayExpression();
 }
 const inputFunctionClicked = (e) => { 
@@ -96,6 +107,7 @@ const inputFunctionClicked = (e) => {
 
   displayExpression();
   clearCurrNum();
+  displayCurrNum();
 }
 
 const inputEqualsClicked = (e) => {
@@ -103,12 +115,17 @@ const inputEqualsClicked = (e) => {
 
   displayExpression();
   clearCurrNum();
+  displayCurrNum();
 }
 
 const clearClicked = (e) => {
-  if( expressionInProgress ) resetExpression();
+  if( expressionInProgress ) {
+    resetExpression();
+    displayExpression();
+  }
 
   clearCurrNum(); 
+  displayCurrNum();
 }
 
 const deleteClicked = (e) => {
@@ -119,13 +136,8 @@ const deleteClicked = (e) => {
 
 
 const inputDotClicked = (e) => {
-  useLastResult = false;
-  noDigitClicked = false;
-  expressionInProgress = true;
-
-  currNumElem.textContent = getCurrNum().includes('.') ? getCurrNum() : getCurrNum() + '.';
-  
-  console.log('Current number eval:' + currNumEval() );
+  takeDot();
+  displayCurrNum();
 }
 
 
