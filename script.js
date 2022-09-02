@@ -6,41 +6,27 @@ const inputFunctionList = document.querySelectorAll('button.input-function');
 const inputDot = document.querySelector('button.input-dot');
 const inputEquals = document.querySelector('button.input-equals');
 
-let expression = '';
-let currNum = '0';
 let lastResult = 0;
 let expressionInProgress = true;
 let useLastResult = false;
 let noDigitClicked = true;
 
 /// 
-/// Util functions
+/// Expression and current number globals + resetters
 ///
+let expression = '';
+let currNum = '0';
 
-const displayExpression = () => {
-  expressionElem.textContent = expression;
-}
-
-const displayCurrNum = () => {
-  currNumElem.textContent = currNum;
-}
 
 const resetExpression = () => {
   expression = '';
 }
 
-const getCurrNum = () => {
-  return currNum;
-}
-
-const clearCurrNum = () => {
+const resetCurrNum = () => {
   currNum = '0';
   noDigitClicked = true;
 }
 
-const currNumEval = () => {
-  return eval( getCurrNum() );
-}
 
 
 ///
@@ -78,6 +64,7 @@ const takeDot = () => {
 }
 
 
+
 const hitEquals = () => {
   if( noDigitClicked ) return;
   //only expressions that are in progress are to be evaluated
@@ -93,6 +80,31 @@ const hitEquals = () => {
 
 
 
+const applyDelete = () => {
+  if( currNum.length === 1 ) currNum = '0';
+  else currNum = currNum.slice( 0, currNum.length - 1 );
+}
+
+
+////////
+////////  Calculator working on globals ends HERE ^^^^^^
+////////  The above part allows to JEST it!
+////////
+
+
+
+///
+/// DOM display functions
+///
+const displayExpression = () => {
+  expressionElem.textContent = expression;
+}
+
+const displayCurrNum = () => {
+  currNumElem.textContent = currNum;
+}
+
+
 ///
 /// All event handlers
 ///
@@ -102,21 +114,31 @@ const inputDigitClicked = (e) => {
   displayCurrNum();
   displayExpression();
 }
+
+
 const inputFunctionClicked = (e) => { 
   takeFunction( e.srcElement.dataset.value ); 
 
   displayExpression();
-  clearCurrNum();
+  resetCurrNum();
   displayCurrNum();
 }
+
 
 const inputEqualsClicked = (e) => {
   hitEquals();
 
   displayExpression();
-  clearCurrNum();
+  resetCurrNum();
   displayCurrNum();
 }
+
+
+const inputDotClicked = (e) => {
+  takeDot();
+  displayCurrNum();
+}
+
 
 const clearClicked = (e) => {
   if( expressionInProgress ) {
@@ -124,21 +146,16 @@ const clearClicked = (e) => {
     displayExpression();
   }
 
-  clearCurrNum(); 
+  resetCurrNum(); 
   displayCurrNum();
 }
+
 
 const deleteClicked = (e) => {
-  console.log('delete');
-}
-
-
-
-
-const inputDotClicked = (e) => {
-  takeDot();
+  applyDelete();
   displayCurrNum();
 }
+
 
 
 ///
