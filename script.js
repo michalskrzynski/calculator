@@ -98,6 +98,8 @@ const applyDelete = () => {
 /// DOM display functions
 ///
 const saveExpression = (exp) => {
+  if( expression === '' || expressionInProgress ) return;
+
   const note = document.createElement('p');
   note.setAttribute('class', 'note');
   note.innerText = exp;
@@ -105,6 +107,7 @@ const saveExpression = (exp) => {
 }
 
 const displayExpression = () => {
+
   expressionElem.textContent = expression;
 }
 
@@ -117,6 +120,7 @@ const displayCurrNum = () => {
 /// All event handlers
 ///
 const inputDigitClicked = (e) => { 
+  saveExpression( expression );
   takeDigit( e.srcElement.dataset.value ) 
 
   displayCurrNum();
@@ -125,6 +129,7 @@ const inputDigitClicked = (e) => {
 
 
 const inputFunctionClicked = (e) => { 
+  saveExpression( expression );
   takeFunction( e.srcElement.dataset.value ); 
 
   displayExpression();
@@ -136,7 +141,6 @@ const inputFunctionClicked = (e) => {
 const inputEqualsClicked = (e) => {
   hitEquals();
 
-  saveExpression( expression );
   displayExpression();
   resetCurrNum();
   displayCurrNum();
