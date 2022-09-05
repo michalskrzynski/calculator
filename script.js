@@ -5,6 +5,7 @@ const inputDigitList = document.querySelectorAll('button.input-digit'); //digits
 const inputFunctionList = document.querySelectorAll('button.input-function');
 const inputDot = document.querySelector('button.input-dot');
 const inputEquals = document.querySelector('button.input-equals');
+const notepad = document.querySelector('#notepad');
 
 let lastResult = 0;
 let expressionInProgress = true;
@@ -96,6 +97,13 @@ const applyDelete = () => {
 ///
 /// DOM display functions
 ///
+const saveExpression = (exp) => {
+  const note = document.createElement('p');
+  note.setAttribute('class', 'note');
+  note.innerText = exp;
+  notepad.appendChild( note );
+}
+
 const displayExpression = () => {
   expressionElem.textContent = expression;
 }
@@ -128,6 +136,7 @@ const inputFunctionClicked = (e) => {
 const inputEqualsClicked = (e) => {
   hitEquals();
 
+  saveExpression( expression );
   displayExpression();
   resetCurrNum();
   displayCurrNum();

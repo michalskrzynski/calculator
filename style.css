@@ -19,6 +19,24 @@ div.page {
   margin: 20px auto;
 }
 
+div.notepad {
+  background-color: white;
+  margin: 0px 10px;
+
+  transition: height 1s ease-in-out;
+}
+
+p.note {
+  display: block;
+  text-align: end;
+  margin: 0px;
+  padding: 0px 8px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: small;
+  font-weight: bold;
+}
+
+
 div.calculator {
 }
 
